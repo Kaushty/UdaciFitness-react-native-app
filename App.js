@@ -5,6 +5,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { getMetricMetaInfo } from './utils/helper'
 
 import AddEntry from './Components/AddEntry'
+import UdaciSlider from './Components/UdaciSlider'
+import UdaciStepper from './Components/UdaciStepper'
+import DateHeader from './Components/DateHeader'
 
 export default class App extends React.Component { 
 
@@ -54,14 +57,30 @@ export default class App extends React.Component {
 
     return (
       <View>
+        <DateHeader date={(new Date()).toLocaleDateString()}/>
+
         {Object.keys(metrics).map((key) => {
           const { getIcon, type, ...rest} = metrics[key];
           const value = this.state[key]
 
-          
+
           return(
             <View key={key}>
               {getIcon()}
+              {type === 'slider' ?
+              <UdaciSlider
+                value = {value}
+                onChange={() => this.slide(key, value)}
+                {...rest}
+              /> :
+              <UdaciStepper 
+                value={value}
+                onIncrement = {() => this.increment(key)}
+                onDecrement = {() => this.decrement(key)}
+                {...rest}
+              />              
+              }
+
             </View>          
           )
         })}
@@ -69,12 +88,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
