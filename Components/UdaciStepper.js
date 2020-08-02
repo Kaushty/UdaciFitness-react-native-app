@@ -1,8 +1,27 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 
-export default function UdaciStepper({...rest}) {
+import { FontAwesome, Entypo } from '@expo/vector-icons'
+
+export default function UdaciStepper({max, value, unit, step, onIncrement, onDecrement}) {
 	return (
-		<Text> UdaciStepper </Text>
+		<View>
+			<TouchableOpacity 
+				onPress={onDecrement}				
+			>
+				<FontAwesome name='minus' size={30} color={'black'}/>
+			</TouchableOpacity>
+
+			<TouchableOpacity
+				onPress={onIncrement}
+			>
+				<FontAwesome name='plus' size={30} color={'black'}/>
+			</TouchableOpacity>
+
+			<View>
+				<Text> {value} </Text>
+				<Text> {unit} </Text>
+			</View>	
+		</View>
 	)	
 }
